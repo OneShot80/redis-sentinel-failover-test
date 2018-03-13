@@ -1,0 +1,63 @@
+version: '3'
+services:
+  sentinel:
+    image: redis:alpine
+    ports:
+      - '26390:26379'
+    volumes:
+      - ./sentinel.conf:/usr/local/etc/redis/redis.conf
+    command: "redis-server /usr/local/etc/redis/redis.conf --sentinel"
+    depends_on:
+      - redmaster1
+      - redmaster2
+  redmaster1:
+    image: redis:alpine
+    ports:
+      - '6390:6379'
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+  redmaster2:
+    image: redis:alpine
+    ports:
+      - '6391:6379'
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+  redslave1:
+    image: redis:alpine
+    ports:
+      - '6392:6379'
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+    depends_on:
+      - redmaster1
+  redslave2:
+    image: redis:alpine
+    ports:
+      - '6393:6379'
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+    depends_on:
+      - redmaster1
+  redslave3:
+    image: redis:alpine
+    ports:
+      - '6394:6379'
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+    depends_on:
+      - redmaster2
+  redslave4:
+    image: redis:alpine
+    ports:
+      - '6395:6379'
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+    depends_on:
+      - redmaster2
+  
