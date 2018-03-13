@@ -15,21 +15,21 @@ services:
     ports:
       - '6390:6379'
     volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./m1/redis.conf:/usr/local/etc/redis/redis.conf
     command: "redis-server /usr/local/etc/redis/redis.conf"
   redmaster2:
     image: redis:alpine
     ports:
       - '6391:6379'
     volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./m2/redis.conf:/usr/local/etc/redis/redis.conf
     command: "redis-server /usr/local/etc/redis/redis.conf"
   redslave1:
     image: redis:alpine
     ports:
       - '6392:6379'
     volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./s1/redis.conf:/usr/local/etc/redis/redis.conf
     command: "redis-server /usr/local/etc/redis/redis.conf"
     depends_on:
       - redmaster1
@@ -38,7 +38,7 @@ services:
     ports:
       - '6393:6379'
     volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./s2/redis.conf:/usr/local/etc/redis/redis.conf
     command: "redis-server /usr/local/etc/redis/redis.conf"
     depends_on:
       - redmaster1
@@ -47,7 +47,7 @@ services:
     ports:
       - '6394:6379'
     volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./s3/redis.conf:/usr/local/etc/redis/redis.conf
     command: "redis-server /usr/local/etc/redis/redis.conf"
     depends_on:
       - redmaster2
@@ -56,7 +56,7 @@ services:
     ports:
       - '6395:6379'
     volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./s4/redis.conf:/usr/local/etc/redis/redis.conf
     command: "redis-server /usr/local/etc/redis/redis.conf"
     depends_on:
       - redmaster2
